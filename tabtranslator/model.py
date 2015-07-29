@@ -1,10 +1,9 @@
 class Note(object):
 	"""docstring for note"""
-	def __init__(self, name, start=0, lenght=1):
+	def __init__(self, pitch, duration=1):
 		super(Note, self).__init__()
-		self.name = name
-		self.start = start
-		self.lenght = lenght
+		self.pitch = pitch
+		self.duration = duration
 
 class Bar(object):
 	"""docstring for bar"""
