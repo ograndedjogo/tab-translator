@@ -23,7 +23,8 @@ class tab(sheet):
 
 class bar(object):
 	""" bar: Models a measure.
-		Compose the sheet as the temporal layer """
+		Compose the sheet as the temporal layer
+			=> Where the notes are displayed on the sheet """
 	def __init__(self, cycle=4):
 		super(bar, self).__init__()
 		self.cycle = cycle
@@ -39,6 +40,7 @@ class bar(object):
 class note(object):
 	""" note: Models the unit in music representation 
 		Drives visual representation
+			=> What note must be displayed on the sheet
 		"""
 	def __init__(self, pitch, duration=1):
 		super(bote, self).__init__()
