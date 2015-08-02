@@ -10,9 +10,9 @@ class bar(object):
 	""" bar: Models a measure.
 		Compose the sheet as the temporal layer
 			=> Where the notes are displayed on the sheet """
-	def __init__(self, cycle=4):
+	def __init__(self, time_signature=4):
 		super(bar, self).__init__()
-		self.cycle = cycle
+		self.time_signature = time_signature
 		self.notes = list()
 
 class note(object):
