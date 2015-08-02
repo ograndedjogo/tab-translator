@@ -1,4 +1,4 @@
-class sheet(object):
+class Sheet(object):
 	""" sheet: Top level object.
 		Models the entire music sheet """
 	def __init__(self, name):
@@ -6,7 +6,7 @@ class sheet(object):
 		self.name = name
 		self.bars = list()
 
-class bar(object):
+class Bar(object):
 	""" bar: Models a measure.
 		Compose the sheet as the temporal layer
 			=> Where the notes are displayed on the sheet """
@@ -15,7 +15,7 @@ class bar(object):
 		self.time_signature = time_signature
 		self.notes = list()
 
-class note(object):
+class Note(object):
 	""" note: Models the unit in music representation
 		Drives visual representation
 			=> What note must be displayed on the sheet """
