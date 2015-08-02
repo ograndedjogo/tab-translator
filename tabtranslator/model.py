@@ -1,3 +1,5 @@
+# coding: utf-8
+
 class Sheet(object):
 	""" sheet: Top level object.
 		Models the entire music sheet """
