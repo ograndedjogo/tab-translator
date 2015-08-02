@@ -50,15 +50,24 @@ def build_lily_chord(chord, char2notes):
   print staff
   return staff
 
-def __init_sheet():
+def __init_stave():
   staff = "\\version 2.18.2{\n\\new PianoStaff << \n"
   staff += "  \\new Staff {"
   # staff += "  \\new Staff { \clef bass " + lower_staff + "}\n"  
   return staff
 
-def __end_sheet():
+def __end_stave():
   staff = "}\n"
   staff += ">>\n}\n"
+  return staff
+
+def __init_tab():
+  staff = "\\new TabStaff{ \n"
+  # staff += "  \\new Staff { \clef bass " + lower_staff + "}\n"  
+  return staff
+
+def __end_tab():
+  staff = "}\n"
   return staff
 
 def writte_ly_staff(txt, char2notes):
@@ -76,20 +85,29 @@ char2notes = {
   'B':"b4 ",
   'C':'c\'4 ',
   'D':'d4 ',
-  'E':'e\'\'4 ',
+  'E':'e4 ',
   'F':'f4 ',
   'G':'g4 ',
 }
 
+
+
 # Set of note and chords to be printed
-txt = ["A", "E", "C", "E G A", "C", "C"] 
+txt = ["A", "B", "F", "A D B", "F", "B"] 
 
 # writte with .ly syntax
 first_staff = writte_ly_staff(txt, char2notes)
 
-staff = __init_sheet()
+staff = __init_stave()
 staff += first_staff  
-staff += __end_sheet()
+staff += __end_stave()
+
+tab_staff = __init_tab()
+tab_staff += first_staff  
+tab_staff += __end_tab()
+
+
+
 
 
 # title = """\header {
@@ -97,4 +115,4 @@ staff += __end_sheet()
 #   composer = "Lamaw"
 # }"""
 
-print staff # title +
+print tab_staff + "\n" + staff  # title +
