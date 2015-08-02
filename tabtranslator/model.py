@@ -13,14 +13,7 @@ class bar(object):
 	def __init__(self, cycle=4):
 		super(bar, self).__init__()
 		self.cycle = cycle
-		self.notes = dict()
-
-	def add_note(self, note, start_time):
-		"""
-		note : note : note instance
-		start_time : int : start time inside the measure
-		"""
-		self.notes[note] = start_time
+		self.notes = list()
 
 class note(object):
 	""" note: Models the unit in music representation
