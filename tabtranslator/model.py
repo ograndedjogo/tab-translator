@@ -18,9 +18,7 @@ class Bar(object):
 		self.notes = list()
 
 class Note(object):
-	""" note: Models the unit in music representation
-		Drives visual representation
-			=> What note must be displayed on the sheet """
+	""" note: Models the unit in music representation"""
 	def __init__(self, pitch, duration=1):
 		super(Note, self).__init__()
 		self.pitch = pitch
