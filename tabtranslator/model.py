@@ -15,7 +15,7 @@ class Bar(object):
 	def __init__(self, time_signature=4):
 		super(Bar, self).__init__()
 		self.time_signature = time_signature
-		self.notes = list()
+		self.voices = list()
 
 class Note(object):
 	""" note: Models the unit in music representation"""

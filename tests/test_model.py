@@ -8,7 +8,7 @@ def test_Sheet():
 def test_Bar():
     b = Bar()
     assert b.time_signature is not None, "No time_signature defined"
-    assert iter(b.notes), "Notes in bar should be iterables"
+    assert iter(b.voices), "Notes in bar should be iterables"
 
 def test_Note():
     n = Note(440)
