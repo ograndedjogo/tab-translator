@@ -1,4 +1,4 @@
-from tabtranslator.transform import order_points, distance
+from tabtranslator.transform import order_points, distance, get_target_rectangle_size
 
 
 def test_order_points():
@@ -22,3 +22,7 @@ def __assert_points_order(points, order, actual):
 def test_distance():
     assert 1 == distance((0, 0), (0, 1))
     assert 5 == distance((0, 3), (4, 0))
+
+def test_get_target_rectangle_size():
+    test_case = ((0, 0), (1, 0), (0.5, 0.5), (0, 1))
+    assert (1, 1) == get_target_rectangle_size(test_case)

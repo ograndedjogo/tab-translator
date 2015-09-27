@@ -1,5 +1,9 @@
 # coding: utf-8
 import numpy as np
+import cv2
+
+# top left, top right, bottom right, bottom left
+POINTS_ORDER = ((0, 0), (1, 0), (1, 1), (0, 1))
 
 
 def order_points(points):
@@ -17,3 +21,14 @@ def distance(point_a, point_b):
     x_diff = point_a[0] - point_b[0]
     y_diff = point_a[1] - point_b[1]
     return np.sqrt(x_diff ** 2 + y_diff ** 2)
+
+
+def get_target_rectangle_size(ordered_points):
+    top_width = distance(ordered_points[0], ordered_points[1])
+    bottom_width = distance(ordered_points[2], ordered_points[3])
+    width = max(int(top_width), int(bottom_width))
+
+    left_height = distance(ordered_points[0], ordered_points[3])
+    right_height = distance(ordered_points[1], ordered_points[2])
+    height = max(int(left_height), int(right_height))
+    return width, height
