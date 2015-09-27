@@ -1,4 +1,4 @@
-from tabtranslator.transform import order_points
+from tabtranslator.transform import order_points, distance
 
 
 def test_order_points():
@@ -17,3 +17,8 @@ def test_order_points():
 def __assert_points_order(points, order, actual):
     expected = [el[1] for el in sorted(list(zip(order, points)), key=lambda x: x[0])]
     assert expected == actual, "Wrong points order"
+
+
+def test_distance():
+    assert 1 == distance((0, 0), (0, 1))
+    assert 5 == distance((0, 3), (4, 0))

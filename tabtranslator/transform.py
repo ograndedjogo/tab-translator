@@ -1,4 +1,5 @@
 # coding: utf-8
+import numpy as np
 
 
 def order_points(points):
@@ -10,3 +11,9 @@ def order_points(points):
     ordered_points[2] = sorted_by_sum[-1]
     ordered_points[3] = sorted_by_diff[0]
     return ordered_points
+
+
+def distance(point_a, point_b):
+    x_diff = point_a[0] - point_b[0]
+    y_diff = point_a[1] - point_b[1]
+    return np.sqrt(x_diff ** 2 + y_diff ** 2)
