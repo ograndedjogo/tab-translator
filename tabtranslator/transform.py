@@ -32,3 +32,14 @@ def get_target_rectangle_size(ordered_points):
     right_height = distance(ordered_points[1], ordered_points[2])
     height = max(int(left_height), int(right_height))
     return width, height
+
+
+def process(original_points, image):
+    ordered_points = order_points(original_points)
+    width, height = get_target_rectangle_size(ordered_points)
+    expected_points = [(el[0] * width, el[1] * height) for el in POINTS_ORDER]
+
+    # get the transform matrice and apply it to the image
+    np_points = [np.array(p, dtype = 'float32') for p in (ordered_points, expected_points)]
+    matrice = cv2.getPerspectiveTransform(*np_points)
+    return cv2.warpPerspective(image, matrice, (width, height))
