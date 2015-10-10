@@ -38,7 +38,7 @@ def get_target_rectangle_size(ordered_points):
     return width, height
 
 
-def process(original_points, image):
+def process(image, original_points):
     ordered_points = order_points(original_points)
     width, height = get_target_rectangle_size(ordered_points)
     expected_points = [(el[0] * width, el[1] * height) for el in POINTS_ORDER]
