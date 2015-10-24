@@ -48,3 +48,19 @@ def process(image, original_points):
                  for p in (ordered_points, expected_points)]
     matrice = cv2.getPerspectiveTransform(*np_points)
     return cv2.warpPerspective(image, matrice, (width, height))
+
+
+def resize(image, ratio=None, height=None, width=None):
+    image_height, image_width = image.shape[:2]
+    if height and width:
+        pass
+    elif height:
+        ratio = height / image_height
+    elif width:
+        ratio = width / image_width
+    if ratio:
+        height, width = (int(el * ratio) for el in image.shape[:2])
+    if height is None or width is None:
+        raise ValueError
+
+    return cv2.resize(image, (width, height))
