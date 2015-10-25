@@ -64,3 +64,24 @@ def resize(image, ratio=None, height=None, width=None):
         raise ValueError
 
     return cv2.resize(image, (width, height))
+
+
+def detect_englobing_polygon(image, edge_count=4):
+    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    blur = cv2.GaussianBlur(gray, (5, 5), .4)
+    edge = cv2.Canny(blur, 250, 750)
+
+    _, contours, _ = cv2.findContours(edge.copy(),
+                                      cv2.RETR_LIST,
+                                      cv2.CHAIN_APPROX_SIMPLE)
+    contours = sorted(contours, key=cv2.contourArea, reverse=True)
+    for contour in contours:
+        perimeter = cv2.arcLength(contour, True)
+        approx = cv2.approxPolyDP(contour, 0.02 * perimeter, True)
+
+        if len(approx) == edge_count:
+            result = approx
+            break
+    else:
+        raise NotImplementedError()
+    return result

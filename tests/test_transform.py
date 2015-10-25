@@ -1,5 +1,6 @@
 import numpy as np
-from tabtranslator.transform import order_points, distance, get_target_rectangle_size, resize
+import cv2
+from tabtranslator.transform import order_points, distance, get_target_rectangle_size, resize, detect_englobing_polygon
 
 
 def test_order_points():
@@ -30,7 +31,7 @@ def test_get_target_rectangle_size():
 
 
 def test_resize():
-    array = np.ndarray(shape=(2000, 3000), dtype=float)
+    array = np.ndarray(shape=(2000, 3000), dtype='uint8')
     try:
         resize(array)
         assert False, "should have raise exception"
@@ -40,4 +41,17 @@ def test_resize():
     assert (200, 300) == resize(array, ratio=0.1).shape[:2]
     assert (200, 300) == resize(array, height=200).shape[:2]
     assert (200, 300) == resize(array, width=300).shape[:2]
-    assert (200, 300) == resize(array, height=200, width=300).shape[:2]
+    assert (220, 330) == resize(array, height=220, width=330).shape[:2]
+
+def test_detect_englobing_polygon():
+    array = np.ones(shape=(2000, 3000, 3), dtype='uint8') * 250
+    array[200:1800, 200:2800, :] = 0
+    array[300:1000, 400:2200, :] = 250
+    points = detect_englobing_polygon(array)
+    assert len(points) == 4
+    assert (200, 200) in points
+    assert (200, 1799) in points
+    assert (2799, 200) in points
+    assert (2799, 1799) in points
+
+
