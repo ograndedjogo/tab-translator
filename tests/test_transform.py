@@ -1,7 +1,7 @@
 import numpy as np
 import cv2
 from tabtranslator.transform import order_points, distance, get_target_rectangle_size, resize, detect_englobing_polygon
-
+import pkg_resources as pkg
 
 def test_order_points():
     test_case = [(1, 1), (0, 1), (0, 0), (1, 0)]
@@ -44,10 +44,22 @@ def test_resize():
     assert (200, 300) == resize(array, width=300).shape[:2]
     assert (220, 330) == resize(array, height=220, width=330).shape[:2]
 
-def test_detect_englobing_polygon():
+def test_detect_englobing_polygon_simple():
     array = np.ones(shape=(2000, 3000, 3), dtype='uint8') * 250
     array[200:1800, 200:2800, :] = 0
     array[300:1000, 400:2200, :] = 250
+    points = detect_englobing_polygon(array)
+    assert len(points) == 4
+    assert (200, 200) in points
+    assert (200, 1799) in points
+    assert (2799, 200) in points
+    assert (2799, 1799) in points
+
+def test_detect_englobing_polygon_photo():
+    sheet = pkg.resource_stream('tests.images', 'sheet.jpg')
+    array = np.asarray(bytearray(sheet.read()))
+    array = cv2.imdecode(array, cv2.IMREAD_ANYDEPTH)
+    assert array is not None
     points = detect_englobing_polygon(array)
     assert len(points) == 4
     assert (200, 200) in points

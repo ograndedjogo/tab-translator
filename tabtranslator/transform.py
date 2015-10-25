@@ -89,7 +89,9 @@ def resize(image, ratio=None, height=None, width=None):
 
 
 def detect_englobing_polygon(image, edge_count=4):
-    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    resized_image = resize(image, width=500)
+    ratio = image.shape[0] / resized_image.shape[0]
+    gray = cv2.cvtColor(resized_image, cv2.COLOR_BGR2GRAY)
     blur = cv2.GaussianBlur(gray, (5, 5), .4)
     edge = cv2.Canny(blur, 250, 750)
 
@@ -106,4 +108,4 @@ def detect_englobing_polygon(image, edge_count=4):
             break
     else:
         raise NotImplementedError()
-    return result
+    return result * ratio
