@@ -7,6 +7,10 @@ POINTS_ORDER = ((0, 0), (1, 0), (1, 1), (0, 1))
 
 
 def order_points(points):
+    return _order_points_angle(points)
+
+
+def _order_points_sum_diff(points):
     """Orders a list of four points so that the result list is top left, top
     right, bottom right, bottom left"""
     ordered_points = [None for _ in range(4)]
@@ -17,6 +21,24 @@ def order_points(points):
     ordered_points[2] = sorted_by_sum[-1]
     ordered_points[3] = sorted_by_diff[0]
     return ordered_points
+
+
+def _order_points_angle(points):
+    """Orders a list of four points so that the result list is top left, top
+    right, bottom right, bottom left"""
+    ordered_points = [None for _ in range(4)]
+    sorted_by_sum = sorted(points, key=lambda x: x[0] + x[1])
+    ordered_points[0] = sorted_by_sum[0]
+    sorted_by_sum.remove(ordered_points[0])
+    sorted_by_angle = sorted(sorted_by_sum,
+                             key=lambda x: _get_angle(ordered_points[0], x),
+                             reverse=True)
+    ordered_points[1:] = sorted_by_angle
+    return ordered_points
+
+
+def _get_angle(p1, p2):
+    return np.arctan2((p2[0] - p1[0]), (p2[1] - p1[1]))
 
 
 def distance(point_a, point_b):
