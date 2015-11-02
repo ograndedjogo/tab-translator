@@ -56,15 +56,13 @@ def test_detect_englobing_polygon_simple():
     assert (2799, 1799) in points
 
 def test_detect_englobing_polygon_photo():
-    sheet = pkg.resource_stream('tests.images', 'sheet.jpg')
-    array = np.asarray(bytearray(sheet.read()))
-    array = cv2.imdecode(array, cv2.IMREAD_ANYDEPTH)
-    assert array is not None
+    array = _image('sheet.jpg')
     points = detect_englobing_polygon(array)
     assert len(points) == 4
-    assert (200, 200) in points
-    assert (200, 1799) in points
-    assert (2799, 200) in points
-    assert (2799, 1799) in points
 
 
+def _image(name):
+    image = pkg.resource_stream('tests.images', name)
+    array = np.asarray(bytearray(image.read()), dtype='uint8')
+    assert array is not None
+    return cv2.imdecode(array, cv2.IMREAD_UNCHANGED)
