@@ -1,6 +1,7 @@
 # coding: utf-8
 import numpy as np
 import cv2
+import inspect
 
 # top left, top right, bottom right, bottom left
 POINTS_ORDER = ((0, 0), (1, 0), (1, 1), (0, 1))
@@ -9,6 +10,25 @@ POINTS_ORDER = ((0, 0), (1, 0), (1, 1), (0, 1))
 def order_points(points):
     return _order_points_angle(points)
 
+
+def ordered(*arg_names):
+    def decorator(func):
+        argspec = inspect.getargspec(func)
+        def wrapper(*args, **kwargs):
+            for arg in arg_names:
+                index = argspec.args.index(arg)
+                if index < len(args):
+                    ordered_points = order_points(args[index])
+                    try:
+                        args[index] = ordered_points
+                    except TypeError:
+                        args = list(args)
+                        args[index] = ordered_points
+                elif arg in kwargs.keys():
+                    kwargs[arg] = order_points(kwargs[arg])
+            return func(*args, **kwargs)
+        return wrapper
+    return decorator
 
 def _order_points_sum_diff(points):
     """Orders a list of four points so that the result list is top left, top

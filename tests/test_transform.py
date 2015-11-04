@@ -1,20 +1,56 @@
 import numpy as np
 import cv2
-from tabtranslator.transform import order_points, distance, get_target_rectangle_size, resize, detect_englobing_polygon
+from tabtranslator.transform import ordered, order_points, distance, get_target_rectangle_size, resize, detect_englobing_polygon
 import pkg_resources as pkg
 
 def test_order_points():
     test_case = [(1, 1), (0, 1), (0, 0), (1, 0)]
     order = (2, 3, 0, 1)
     __assert_points_order(test_case, order, order_points(test_case))
+    __assert_points_order(test_case, order, order_points(order_points(test_case)))
 
     test_case = [(10, 10), (0, 10), (0, 0), (10, 0)]
     order = (2, 3, 0, 1)
     __assert_points_order(test_case, order, order_points(test_case))
+    __assert_points_order(test_case, order, order_points(order_points(test_case)))
 
     test_case = [(430, 130), (304, 33), (75, 100), (153, 272)]
     order = (2, 1, 0, 3)
     __assert_points_order(test_case, order, order_points(test_case))
+    __assert_points_order(test_case, order, order_points(order_points(test_case)))
+
+def test_ordered():
+    test_case = [(1, 1), (0, 1), (0, 0), (1, 0)]
+    expected = order_points(test_case)
+
+    @ordered('toto', 'tata')
+    def test(toto, tata=None):
+        tata = tata or expected
+        assert toto == expected
+        assert tata == expected
+
+    test(test_case)
+    test(test_case, test_case)
+    test(toto=test_case, tata=test_case)
+
+def test_ordered_bubling_exception():
+    try:
+        order_points(90)
+    except Exception as e:
+        expected_exception = e
+
+    @ordered('toto')
+    def test(toto):
+        pass
+
+    try:
+        test(90)
+    except Exception as e:
+        catched_exception = e
+
+    assert type(expected_exception) == type(catched_exception)
+    assert expected_exception.args == catched_exception.args
+
 
 
 def __assert_points_order(points, order, actual):
@@ -59,6 +95,10 @@ def test_detect_englobing_polygon_photo():
     array = _image('sheet.jpg')
     points = detect_englobing_polygon(array)
     assert len(points) == 4
+    import q
+    area = q/cv2.contourArea(q/points.astype(int))
+    assert area > (array.shape[0] * array.shape[1])* 2 / 3
+
 
 
 def _image(name):
