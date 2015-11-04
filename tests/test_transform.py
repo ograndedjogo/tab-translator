@@ -1,9 +1,13 @@
 import numpy as np
 import cv2
-from tabtranslator.transform import ordered, order_points, distance, get_target_rectangle_size, resize, detect_englobing_polygon
+from tabtranslator.transform import ordered, order_points, distance, \
+                                    get_target_rectangle_size, resize, \
+                                    detect_englobing_polygon, POINTS_ORDER
 import pkg_resources as pkg
 
 def test_order_points():
+    assert list(POINTS_ORDER) == order_points(POINTS_ORDER)
+
     test_case = [(1, 1), (0, 1), (0, 0), (1, 0)]
     order = (2, 3, 0, 1)
     __assert_points_order(test_case, order, order_points(test_case))

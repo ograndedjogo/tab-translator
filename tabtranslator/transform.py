@@ -30,6 +30,7 @@ def ordered(*arg_names):
         return wrapper
     return decorator
 
+
 def _order_points_sum_diff(points):
     """Orders a list of four points so that the result list is top left, top
     right, bottom right, bottom left"""
@@ -68,26 +69,27 @@ def distance(point_a, point_b):
     return np.sqrt(x_diff ** 2 + y_diff ** 2)
 
 
-def get_target_rectangle_size(ordered_points):
+@ordered('points')
+def get_target_rectangle_size(points):
     """Returns the max (width, height) of a quadrilateral"""
-    top_width = distance(ordered_points[0], ordered_points[1])
-    bottom_width = distance(ordered_points[2], ordered_points[3])
+    top_width = distance(points[0], points[1])
+    bottom_width = distance(points[2], points[3])
     width = max(int(top_width), int(bottom_width))
 
-    left_height = distance(ordered_points[0], ordered_points[3])
-    right_height = distance(ordered_points[1], ordered_points[2])
+    left_height = distance(points[0], points[3])
+    right_height = distance(points[1], points[2])
     height = max(int(left_height), int(right_height))
     return width, height
 
 
-def process(image, original_points):
-    ordered_points = order_points(original_points)
-    width, height = get_target_rectangle_size(ordered_points)
+@ordered('points')
+def process(image, points):
+    width, height = get_target_rectangle_size(points)
     expected_points = [(el[0] * width, el[1] * height) for el in POINTS_ORDER]
 
     # get the transform matrice and apply it to the image
     np_points = [np.array(p, dtype='float32')
-                 for p in (ordered_points, expected_points)]
+                 for p in (points, expected_points)]
     matrice = cv2.getPerspectiveTransform(*np_points)
     return cv2.warpPerspective(image, matrice, (width, height))
 
