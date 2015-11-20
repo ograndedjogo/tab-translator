@@ -1,8 +1,9 @@
+sudo: false
+language: python
+
 branches:
   only:
     - gh_12_ci
-
-language: python
 
 before_install:
  - sudo apt-get update
