@@ -105,7 +105,7 @@ def resize(image, ratio=None, height=None, width=None):
     if ratio:
         height, width = (int(el * ratio) for el in image.shape[:2])
     if height is None or width is None:
-        raise ValueError
+        raise ValueError("at least one of ratio, height or width must be provided")
 
     return cv2.resize(image, (width, height))
 
