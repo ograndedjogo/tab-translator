@@ -129,5 +129,5 @@ def detect_englobing_polygon(image, edge_count=4):
             result = approx
             break
     else:
-        raise NotImplementedError()
+        raise LookupError("No polygon deteted")
     return result * ratio

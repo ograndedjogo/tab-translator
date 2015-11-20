@@ -110,6 +110,15 @@ def test_detect_englobing_polygon_nested():
     assert (2790, 200) in points
     assert (2790, 1790) in points
 
+def test_detect_englobing_polygon_error():
+    array = np.ones(shape=(200, 200, 3), dtype='uint8') * 250
+    try:
+        points = detect_englobing_polygon(array)
+        assert False, 'Detected points while no polygon in the image'
+    except LookupError:
+        pass
+
+
 def test_detect_englobing_polygon_photo():
     array = _image('sheet.jpg')
     points = detect_englobing_polygon(array).astype(int)
