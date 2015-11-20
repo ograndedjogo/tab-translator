@@ -1,7 +1,7 @@
 # coding: utf-8
 import cv2
 # import numpy as np
-from transform import resize
+from tabtranslator.transform import resize
 
 
 class CvFilterStack(object):
