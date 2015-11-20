@@ -98,6 +98,18 @@ def test_detect_englobing_polygon_simple():
     assert (2790, 200) in points
     assert (2790, 1790) in points
 
+def test_detect_englobing_polygon_nested():
+    array = np.ones(shape=(5000, 5000, 3), dtype='uint8') * 250
+    array[200:1800, 200:2800, :] = 0
+    array[300:1000, 400:2200, :] = 250
+    points = detect_englobing_polygon(array)
+    assert len(points) == 4
+    points = [tuple(*el) for el in points]
+    assert (200, 200) in points
+    assert (200, 1790) in points
+    assert (2790, 200) in points
+    assert (2790, 1790) in points
+
 def test_detect_englobing_polygon_photo():
     array = _image('sheet.jpg')
     points = detect_englobing_polygon(array).astype(int)
