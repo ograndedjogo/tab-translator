@@ -100,11 +100,12 @@ def test_detect_englobing_polygon_simple():
 
 def test_detect_englobing_polygon_photo():
     array = _image('sheet.jpg')
-    points = detect_englobing_polygon(array)
+    points = detect_englobing_polygon(array).astype(int)
     assert len(points) == 4
-    import q
-    area = q/cv2.contourArea(q/points.astype(int))
-    assert area > (array.shape[0] * array.shape[1])* 2 / 3
+    area = cv2.contourArea(points)
+    points = [(p[0, 0], p[0, 1]) for p in points]
+    h, w = get_target_rectangle_size(points)
+    assert h * w > (array.shape[0] * array.shape[1])* 1 / 3
 
 
 
