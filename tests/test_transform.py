@@ -69,6 +69,9 @@ def test_distance():
 def test_get_target_rectangle_size():
     test_case = ((0, 0), (1, 0), (0.5, 0.5), (0, 1))
     assert (1, 1) == get_target_rectangle_size(test_case)
+    nparray = np.array(test_case, dtype='float')
+    assert (1, 1) == get_target_rectangle_size(nparray)
+
 
 
 def test_resize():
