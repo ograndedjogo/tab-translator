@@ -1,17 +1,20 @@
+sudo: required
 notifications:
   email: false
+
 language: python
+services:
+  - docker
 
 branches:
   only:
     - gh_12_ci
 
 before_install:
- - sudo apt-get update
- - sudo apt-get install python-opencv
- - sudo dpkg -L python-opencv
+  - pip install -U pip
+  - docker pull dkarchmervue/python34-opencv3
 install:
-  - "pip install --pre -r requirements.txt"
+  - pip install --pre -r requirements.txt
 
 python:
   - "3.4"
