@@ -106,6 +106,9 @@ def test_detect_englobing_polygon_photo():
     points = [(p[0, 0], p[0, 1]) for p in points]
     h, w = get_target_rectangle_size(points)
     assert h * w > (array.shape[0] * array.shape[1])* 1 / 3
+    assert w > array.shape[0]/2
+    assert h > array.shape[1]/2
+    assert h * w > area
 
 
 
