@@ -1,16 +1,18 @@
 SCRIPTDIR=$PWD
-echo $SCRIPTDIR
-echo $HOME
 PREFIX=$SCRIPTDIR/opencv3.0
 SYSTEM_PYTHON34=/opt/python/3.4.2
 
 cd $SCRIPTDIR
-git clone https://github.com/Itseez/opencv_contrib.git
+if [ ! -d "opencv_contrib" ] ; then
+    git clone https://github.com/Itseez/opencv_contrib.git
+fi
 cd opencv_contrib
 git checkout 3.0.0
 
 cd $SCRIPTDIR
-git clone https://github.com/Itseez/opencv.git
+if [ ! -d "opencv" ] ; then
+    git clone https://github.com/Itseez/opencv.git
+fi
 cd opencv
 git checkout 3.0.0
 mkdir build

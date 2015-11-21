@@ -10,6 +10,8 @@ python:
 cache:
   directories:
     - $HOME/.cache/pip
+    - $PWD/opencv_contrib
+    - $PWD/opencv
 
 addons:
   apt:
@@ -31,6 +33,7 @@ branches:
     - gh_12_ci
 
 before_install:
+  - echo $PWD
   - pip install -U pip
   - pip install coveralls
 install:
