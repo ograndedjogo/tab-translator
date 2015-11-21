@@ -1,4 +1,6 @@
 SCRIPTDIR=$PWD
+echo $SCRIPTDIR
+echo $HOME
 PREFIX=$SCRIPTDIR/opencv3.0
 SYSTEM_PYTHON34=/opt/python/3.4.2
 
