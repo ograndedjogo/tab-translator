@@ -10,8 +10,8 @@ python:
 cache:
   directories:
     - $HOME/.cache/pip
-    - $PWD/opencv_contrib
-    - $PWD/opencv
+    - $TRAVIS_BUILD_DIR/opencv_contrib
+    - $TRAVIS_BUILD_DIR/opencv
 
 addons:
   apt:
@@ -26,7 +26,6 @@ addons:
     - libpng12-dev
     - libatlas-base-dev
     - gfortran
-    - python3.4-dev
 
 branches:
   only:

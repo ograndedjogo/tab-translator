@@ -2,6 +2,7 @@ SCRIPTDIR=$PWD
 PREFIX=$SCRIPTDIR/opencv3.0
 SYSTEM_PYTHON34=/opt/python/3.4.2
 
+env | grep TRAVIS_BUILD_DIR
 cd $SCRIPTDIR
 if [ ! -d "opencv_contrib" ] ; then
     git clone https://github.com/Itseez/opencv_contrib.git
