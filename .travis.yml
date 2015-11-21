@@ -28,12 +28,11 @@ branches:
     - gh_12_ci
 
 before_install:
-  - ls -al /opt/python/3.4.2/lib/
   - pip install -U pip
+  - pip install coveralls
 install:
   - pip install --pre -r requirements.txt
   - bash install_opencv.sh
-  - ls -R opencv3.0/lib
 script:
   - coverage run -m py.test
 after_success:

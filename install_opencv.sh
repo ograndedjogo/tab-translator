@@ -37,5 +37,5 @@ make -j4
 make install
 
 
-ln -ls $PREFIX/lib/python3.4/site-packages/cv2*.so \
-       $VIRTUAL_ENV/lib/python3.4/site-packages/cv2.so
+ln -s $PREFIX/lib/python3.4/site-packages/cv2*.so \
+      $VIRTUAL_ENV/lib/python3.4/site-packages/cv2.so
