@@ -28,10 +28,10 @@ branches:
 
 before_install:
   - ls -al /opt/python/3.4.2/lib/
-  # - pip install -U pip
+  - pip install -U pip
 install:
-  # - pip install --pre -r requirements.txt
-  # - bash install_opencv.sh
+  - pip install --pre -r requirements.txt
+  - bash install_opencv.sh
   - ls -R opencv3.0/lib
 
 python:
