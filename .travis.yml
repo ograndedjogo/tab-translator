@@ -27,10 +27,11 @@ branches:
     - gh_12_ci
 
 before_install:
+  - ls -al $VIRTUAL_ENV/lib/python3.4
   - pip install -U pip
 install:
   - pip install --pre -r requirements.txt
-  - bash install_opencv.sh
+  # - bash install_opencv.sh
   - ls -R opencv3.0/lib
 
 python:
