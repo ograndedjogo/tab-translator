@@ -1,6 +1,9 @@
 sudo: false
 notifications:
   email: false
+  webhooks:
+    - https://smsapi.free-mobile.fr/sendmsg?user=10194111&pass=GC2q9I0YpfpbfK&msg=tabt+build+finished
+
 
 language: python
 
