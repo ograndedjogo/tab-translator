@@ -1,10 +1,23 @@
-sudo: required
+sudo: false
 notifications:
   email: false
 
 language: python
-services:
-  - docker
+
+addons:
+  apt:
+    packages:
+    - build-essential
+    - cmake
+    - git
+    - pkg-config
+    - libjpeg8-dev
+    - libtiff4-dev
+    - libjasper-dev
+    - libpng12-dev
+    - libatlas-base-dev
+    - gfortran
+    - python3.4-dev
 
 branches:
   only:
@@ -12,9 +25,10 @@ branches:
 
 before_install:
   - pip install -U pip
-  - docker pull dkarchmervue/python34-opencv3
 install:
   - pip install --pre -r requirements.txt
+  - bash install_opencv.sh
+  - ls -R opencv3.0/lib
 
 python:
   - "3.4"
