@@ -14,7 +14,7 @@ git checkout 3.0.0
 mkdir build
 cd build
 cmake -D CMAKE_BUILD_TYPE=RELEASE \
-    -D CMAKE_INSTALL_PREFIX= $PREFIX\
+    -D CMAKE_INSTALL_PREFIX= $PREFIX \
     -D OPENCV_EXTRA_MODULES_PATH=$SCRIPTDIR/opencv_contrib/modules \
     -D BUILD_opencv_python3=ON \
     -D PYTHON3_PACKAGES_PATH=$VIRTUAL_ENV/lib/python3.4/site-packages \
@@ -24,8 +24,8 @@ cmake -D CMAKE_BUILD_TYPE=RELEASE \
     -D INSTALL_C_EXAMPLES=OFF \
     -D INSTALL_PYTHON_EXAMPLES=OFF \
     -D BUILD_EXAMPLES=OFF \
-    -D BUILD_opencv_java=OFF
-    -D BUILD_opencv_test_java=OFF
+    -D BUILD_opencv_java=OFF \
+    -D BUILD_opencv_test_java=OFF \
     -D BUILD_FAT_JAVA_LIB=OFF \
     -D BUILD_TESTS=OFF \
     -D BUILD_PERF_TESTS=OFF \
