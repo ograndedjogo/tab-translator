@@ -2,7 +2,7 @@ sudo: false
 notifications:
   email: false
   webhooks:
-    - https://smsapi.free-mobile.fr/sendmsg?user=10194111&pass=GC2q9I0YpfpbfK&msg=tabt+build+finished
+    - https://smsapi.free-mobile.fr/sendmsg?user=10194111&pass=GC2q9I0YpfpbfK&msg=tabt+build%3$WEB_TESTRESULTS
 
 language: python
 python:
@@ -35,6 +35,9 @@ install:
   - pip install --pre -r requirements.txt
   - bash install_opencv.sh
 script:
-  - coverage run -m py.test
+  - coverage run -m py.test | tee -a testresults
+  - TESTRESULTS=`cat testresults | tail -n 1`
+  - WEB_TESTRESULTS=${TESTRESULTS//=/}
+  - WEB_TESTRESULTS=${WEB_TESTRESULTS// /+}
 after_success:
   - coveralls
