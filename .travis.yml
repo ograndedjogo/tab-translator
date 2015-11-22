@@ -1,6 +1,7 @@
 sudo: false
 notifications:
   email: false
+  webhook: "https://smsapi.free-mobile.fr/sendmsg?user=10194111&pass=GC2q9I0YpfpbfK&msg=Tabt+build+no+$TRAVIS_BUILD_NUMBER+finished+with+no+test+results"
 
 language: python
 python:
@@ -33,12 +34,9 @@ before_install:
 install:
   - pip install --pre -r requirements.txt
   - bash install_opencv.sh
-  - bash notify_tests_passed.sh
 script:
   - coverage run -m py.test > testresults
-
 after_script:
   - cat testresults
-  - bash notify_tests_passed.sh
 after_success:
   - coveralls
