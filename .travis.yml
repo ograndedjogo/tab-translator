@@ -10,8 +10,7 @@ python:
 cache:
   directories:
     - $HOME/.cache/pip
-    - $TRAVIS_BUILD_DIR/opencv_contrib
-    - $TRAVIS_BUILD_DIR/opencv
+    - $TRAVIS_BUILD_DIR/opencv3.0
 
 addons:
   apt:
