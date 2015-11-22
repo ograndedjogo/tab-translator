@@ -34,9 +34,10 @@ install:
   - pip install --pre -r requirements.txt
   - bash install_opencv.sh
 script:
-  - coverage run -m py.test | tee -a testresults
+  - coverage run -m py.test > testresults
 
 after_script:
+  - cat testresults
   - bash notify_tests_passed.sh
 after_success:
   - coveralls
