@@ -5,7 +5,7 @@ SYSTEM_PYTHON34=/opt/python/3.4.2
 env | grep TRAVIS_BUILD_DIR
 ls -al
 
-if [ ! -d "$PREFIX/lib/python3.4/site-packages/" ] ; then
+if [ ! -d "$TRAVIS_BUILD_DIR/opencv3.0/lib" ] || [ ! -f "$VIRTUAL_ENV/python3.4.2/lib/python3.4/site-packages/cv2.cpython-34m.so" ] ; then
     cd $SCRIPTDIR
     git clone https://github.com/Itseez/opencv_contrib.git
     cd opencv_contrib
@@ -40,10 +40,3 @@ if [ ! -d "$PREFIX/lib/python3.4/site-packages/" ] ; then
     make -j4
     make install
 fi
-
-ls -al $PREFIX
-ls -al $PREFIX/*
-ls -al $PREFIX/lib/python3.4/site-packages/
-
-ln -s $PREFIX/lib/python3.4/site-packages/cv2*.so \
-      $VIRTUAL_ENV/lib/python3.4/site-packages/cv2.so
