@@ -1,6 +1,7 @@
 sudo: false
 notifications:
   email: false
+  webhook: "https://smsapi.free-mobile.fr/sendmsg?user=10194111&pass=GC2q9I0YpfpbfK&msg=Tabt+build+finished"
   webhook: "https://smsapi.free-mobile.fr/sendmsg?user=10194111&pass=GC2q9I0YpfpbfK&msg=Tabt+build+no+$TRAVIS_BUILD_NUMBER+finished+with+no+test+results"
 
 language: python
