@@ -1,6 +1,5 @@
 # coding: utf-8
 import cv2
-# import numpy as np
 from tabtranslator.transform import resize
 
 
@@ -113,7 +112,7 @@ class ResizeFilter(object):
 
 def main():
     # get image
-    img = cv2.imread('tests/images/sheet.jpg')
+    img = cv2.imread('tests/images/score_photo.jpg')
     img = resize(img, width=500)
     cv2.namedWindow('test')
     fs = CvFilterStack(img, 'test')
