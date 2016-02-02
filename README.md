@@ -27,6 +27,6 @@ coverage run -m py.test # produces coverage outputs
 
 ``` bash
 export PYTHONPATH=$PYTHONPATH:$PWD
-python python examples/cv2visu.py tests/images/score.jpg
+python examples/cv2visu.py tests/images/score.jpg
 python examples/scan.py tests/images/sheet.jpg
 ```
