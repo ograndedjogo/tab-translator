@@ -5,6 +5,6 @@ Code coverage: [![Coverage Status](https://coveralls.io/repos/ograndedjogo/tab-t
 examples:
 ``` bash
 export PYTHONPATH=$PYTHONPATH:$PWD
-python examples/cv2visu.py
+python python examples/cv2visu.py tests/images/score.jpg
 python examples/scan.py tests/images/sheet.jpg
 ```

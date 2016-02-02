@@ -111,8 +111,9 @@ class ResizeFilter(object):
 
 
 def main():
+    import sys
     # get image
-    img = cv2.imread('tests/images/score_photo.jpg')
+    img = cv2.imread(sys.argv[1])
     img = resize(img, width=500)
     cv2.namedWindow('test')
     fs = CvFilterStack(img, 'test')
