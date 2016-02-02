@@ -1,8 +1,30 @@
 # tab-translator
-CI tests: [![Image of builds](https://travis-ci.org/ograndedjogo/tab-translator.svg)](https://travis-ci.org/ograndedjogo/tab-translator/builds)
-Code coverage: [![Coverage Status](https://coveralls.io/repos/ograndedjogo/tab-translator/badge.svg?branch=gh_12_ci&service=github)](https://coveralls.io/github/ograndedjogo/tab-translator)
 
-examples:
+CI tests: [![Build status](https://travis-ci.org/ograndedjogo/tab-translator.svg)](https://travis-ci.org/ograndedjogo/tab-translator/builds)
+
+Code coverage: [![Coverage status](https://coveralls.io/repos/ograndedjogo/tab-translator/badge.svg?branch=gh_12_ci&service=github)](https://coveralls.io/github/ograndedjogo/tab-translator)
+
+This document is adressed to developpers.
+
+## setup
+
+Check the [travis configuration](.travis.yml) to setup the environment.
+Main steps are:
+ - clone the git repo `git clone https://github.com/ograndedjogo/tab-translator.git`
+ - install requirements `pip install -r requirements.txt`
+ - install opencv (see [travis configuration](install_opencv.sh)) and its
+   dependencies (see [addons:apt:packages](.travis.yml))
+
+## run tests
+
+tests, consider the [default pytest configuration](pytest.ini) for tabt
+``` bash
+py.test # tests only
+coverage run -m py.test # produces coverage outputs
+```
+
+## run examples
+
 ``` bash
 export PYTHONPATH=$PYTHONPATH:$PWD
 python python examples/cv2visu.py tests/images/score.jpg
