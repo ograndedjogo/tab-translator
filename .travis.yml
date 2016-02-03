@@ -1,0 +1,46 @@
+sudo: false
+notifications:
+  email: false
+  webhook: "https://smsapi.free-mobile.fr/sendmsg?user=10194111&pass=GC2q9I0YpfpbfK&msg=Tabt+build+finished"
+
+language: python
+python:
+  - "3.4"
+  # No python 2.7 working on travis for now
+  # - "2.7"
+cache:
+  pip
+addons:
+  apt:
+    packages:
+    - build-essential
+    - cmake
+    - git
+    - pkg-config
+    - libjpeg8-dev
+    - libtiff4-dev
+    - libjasper-dev
+    - libpng12-dev
+    - libatlas-base-dev
+    - gfortran
+    # GKT opencv GUI, useless on CI
+    # - libgtk2.0-dev
+
+branches:
+  only:
+    - master
+    - develop
+    - gh_12_ci
+
+before_install:
+  - pip install -U pip
+  - pip install coveralls
+install:
+  - pip install --pre -r requirements.txt
+  - bash install_opencv.sh
+script:
+  - coverage run -m py.test >> testresults
+after_script:
+  - cat testresults
+after_success:
+  - coveralls
