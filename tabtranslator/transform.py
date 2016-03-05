@@ -82,18 +82,6 @@ def get_target_rectangle_size(points):
     return width, height
 
 
-@ordered('points')
-def process(image, points):
-    width, height = get_target_rectangle_size(points)
-    expected_points = [(el[0] * width, el[1] * height) for el in POINTS_ORDER]
-
-    # get the transform matrice and apply it to the image
-    np_points = [np.array(p, dtype='float32')
-                 for p in (points, expected_points)]
-    matrice = cv2.getPerspectiveTransform(*np_points)
-    return cv2.warpPerspective(image, matrice, (width, height))
-
-
 def resize(image, ratio=None, height=None, width=None):
     image_height, image_width = image.shape[:2]
     if height and width:
