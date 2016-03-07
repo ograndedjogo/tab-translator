@@ -1,4 +1,7 @@
-
+"""
+This file serves as pure example of lilypond generation work.
+It is used to test different possibilities in early development
+"""
 # char2notes = { 
 #   ' ':("a4 a4 ", "r2 "),
 #   'a':("<c a>2 ", "<e' a'>2 "),
@@ -43,11 +46,8 @@ def build_lily_chord(chord, char2notes):
   staff = ""
   for note in notes:
     staff += char2notes[note]
-  print staff  
   staff = ''.join([i for i in staff if not i.isdigit()])
-  print staff
   staff = "<" + staff + ">4 "
-  print staff
   return staff
 
 def __init_stave():
@@ -99,11 +99,11 @@ txt = ["A", "B", "F", "A D B", "F", "B"]
 first_staff = writte_ly_staff(txt, char2notes)
 
 staff = __init_stave()
-staff += first_staff  
+staff += first_staff
 staff += __end_stave()
 
 tab_staff = __init_tab()
-tab_staff += first_staff  
+tab_staff += first_staff
 tab_staff += __end_tab()
 
 
