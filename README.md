@@ -13,7 +13,7 @@ Main steps are:
  - clone the git repo `git clone https://github.com/ograndedjogo/tab-translator.git`
  - install requirements `pip install -r requirements.txt`
  - install opencv (see [install_opencv.sh](install_opencv.sh)) and its
-   dependencies (see [addons:apt:packages](.travis.yml))
+   dependencies (see [sections _addons:apt:packages_](.travis.yml))
 
 ## run tests
 
