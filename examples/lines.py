@@ -20,6 +20,7 @@ def main():
     cv2.imshow('source', src)
     cv2.imshow('%d hlines' % len(hlines), print_lines(greyed, hlines))
     cv2.imshow('%d hlinesp' % len(hlinesp), print_lines(greyed, hlinesp))
+    cv2.imshow('skeleton', print_lines(skeletonize(src), 50, 200))
     cv2.waitKey(0)
 
 def print_lines(image, lines):
@@ -46,6 +47,24 @@ def HoughLines(image):
         pt2 = ( int(x0-1000*(-b)), int(y0-1000*(a)) )
         lines_points.append((pt1, pt2))
     return lines_points
+
+def skeletonize(image):
+    image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    size = np.size(image)
+    skeleton = np.zeros(image.shape,np.uint8)
+    ret,image = cv2.threshold(image,127,255,0)
+    element = cv2.getStructuringElement(cv2.MORPH_CROSS,(3,3))
+    done = False
+    while(not done):
+        eroded = cv2.erode(image,element)
+        temp = cv2.dilate(eroded,element)
+        temp = cv2.subtract(image,temp)
+        skeleton = cv2.bitwise_or(skeleton,temp)
+        image = eroded.copy()
+        zeros = size - cv2.countNonZero(image)
+        if zeros==size:
+            done = True
+    return skeleton
 
 if __name__ == '__main__':
     main()

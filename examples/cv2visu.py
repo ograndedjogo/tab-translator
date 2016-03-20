@@ -58,8 +58,8 @@ class GaussianFilter(object):
 
     def apply(self, image):
         return cv2.GaussianBlur(image,
-                                tuple([self.kernel_size * 2 + 1] * 2),
-                                (self.sigma + 1) * .1)
+                                tuple([self.kernel_size*2 + 1]*2),
+                                (self.sigma + 1)*.1)
 
     def get_handles(self):
         def set_kernel_size(value):
