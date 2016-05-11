@@ -1,8 +1,7 @@
 # tab-translator
 
-CI tests: [![Build status](https://travis-ci.org/ograndedjogo/tab-translator.svg)](https://travis-ci.org/ograndedjogo/tab-translator/builds)
-
-Code coverage: [![Coverage status](https://coveralls.io/repos/ograndedjogo/tab-translator/badge.svg?branch=develop&service=github)](https://coveralls.io/github/ograndedjogo/tab-translator)
+[![Build status](https://travis-ci.org/ograndedjogo/tab-translator.svg)](https://travis-ci.org/ograndedjogo/tab-translator/builds)
+[![Coverage status](https://coveralls.io/repos/ograndedjogo/tab-translator/badge.svg?branch=develop&service=github)](https://coveralls.io/github/ograndedjogo/tab-translator)
 
 This document is adressed to developpers.
 
