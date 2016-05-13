@@ -6,6 +6,7 @@ import argparse
 import numpy as np
 import cv2
 import math
+from tabtranslator.transform import reduce_lines
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
@@ -16,7 +17,9 @@ def main():
     edged = cv2.Canny(src, 50, 200)
     greyed = cv2.cvtColor(edged, cv2.COLOR_GRAY2BGR)
     hlines = HoughLines(edged)
+    hlines = reduce_lines(hlines)
     hlinesp = HoughLinesP(edged)
+    hlinesp = reduce_lines(hlinesp, angle_threshold=0.1)
     cv2.imshow('source', src)
     cv2.imshow('%d hlines' % len(hlines), print_lines(greyed, hlines))
     cv2.imshow('%d hlinesp' % len(hlinesp), print_lines(greyed, hlinesp))

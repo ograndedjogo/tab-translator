@@ -2,6 +2,7 @@
 import numpy as np
 import cv2
 import inspect
+import sys
 
 # top left, top right, bottom right, bottom left
 POINTS_ORDER = ((0, 0), (1, 0), (1, 1), (0, 1))
@@ -81,6 +82,28 @@ def get_target_rectangle_size(points):
     height = max(int(left_height), int(right_height))
     return width, height
 
+
+def reduce_lines(lines, angle_threshold=0.01, distance_threshold=5):
+    """Reduce a set of lines to horizontal and distinct ones"""
+    horizontal_lines = [line for line in lines if abs(interpolate(*line)[0]) < angle_threshold]
+    horizontal_lines = sorted(horizontal_lines, key=lambda x: interpolate(*x)[1])
+
+    reduced_lines = [horizontal_lines[0]]
+    for line in horizontal_lines:
+        if abs(interpolate(*line)[1] - interpolate(*reduced_lines[-1])[1] > distance_threshold):
+            reduced_lines.append(line)
+
+    return reduced_lines
+
+def interpolate(point_a, point_b):
+    x_diff = point_a[0] - point_b[0]
+    y_diff = point_a[1] - point_b[1]
+    try:
+        a = y_diff/x_diff
+    except ZeroDivisionError as e:
+        a = sys.float_info.max
+    b = point_a[1] - a * point_a[0]
+    return a, b
 
 def resize(image, ratio=None, height=None, width=None):
     image_height, image_width = image.shape[:2]

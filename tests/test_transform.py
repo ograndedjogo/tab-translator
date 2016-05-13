@@ -2,8 +2,10 @@ import numpy as np
 import cv2
 from tabtranslator.transform import ordered, order_points, distance, \
                                     get_target_rectangle_size, resize, \
-                                    detect_englobing_polygon, POINTS_ORDER
+                                    detect_englobing_polygon, POINTS_ORDER, \
+                                    reduce_lines, interpolate
 import pkg_resources as pkg
+import sys
 
 def test_order_points():
     assert list(POINTS_ORDER) == order_points(POINTS_ORDER)
@@ -133,7 +135,48 @@ def test_detect_englobing_polygon_photo():
     assert h > array.shape[1]/2
     assert h * w > area
 
+def test_reduce_lines():
+    """test cases issued from lines.py on score_croped.jpg"""
+    test_case = [((0, 25), (137, 25)),
+                 ((0, 27), (137, 27)),
+                 ((0, 34), (137, 34)),
+                 ((0, 36), (137, 36)),
+                 ((0, 43), (137, 43)),
+                 ((0, 18), (137, 18)),
+                 ((0, 16), (84, 16)),
+                 ((8, 6),  (134, 8)),
+                 ((51, 8), (137, 7))]
+    assert len(reduce_lines(test_case, angle_threshold=0.1)) == 5
 
+    test_case = [((-1000, 24), (999, 25)),
+                 ((-1000, 26), (999, 27)),
+                 ((-1000, 33), (999, 34)),
+                 ((-1000, 35), (999, 36)),
+                 ((-1000, 17), (999, 18)),
+                 ((-1000, 15), (999, 16)),
+                 ((-1000, 42), (999, 43)),
+                 ((-999, 36), (1000, 1)),
+                 ((-999, 34), (1000, 0)),
+                 ((-1000, -11), (998, 57)),
+                 ((-1000, -2), (998, 66)),
+                 ((-998, 63), (1000, -5)),
+                 ((-998, 72), (1000, 3)),
+                 ((-999, 61), (1000, 26)),
+                 ((-999, -20), (998, 48)),
+                 ((-999, -11), (999, 23)),
+                 ((-1000, 6), (999, 7)),
+                 ((-1000, 24), (999, 59)),
+                 ((-998, 54), (1000, -14)),
+                 ((-993, 123), (999, -51))]
+    assert len(reduce_lines(test_case)) == 5
+
+
+def test_interpolate():
+    assert interpolate((0, 0), (1, 0)) == (0, 0)
+    assert interpolate((0, 0), (3000, 0)) == (0, 0)
+    assert interpolate((0, 0), (1, 1)) == (1, 0)
+    assert interpolate((0, 1), (1, 1)) == (0, 1)
+    assert interpolate((0, 0), (0, 1)) == (sys.float_info.max, 0)
 
 def _image(name):
     image = pkg.resource_stream('tests.images', name)

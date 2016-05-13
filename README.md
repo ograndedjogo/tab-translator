@@ -30,4 +30,5 @@ export PYTHONPATH=$PYTHONPATH:$PWD
 python examples/cv2visu.py tests/images/score.jpg
 python examples/scan.py tests/images/sheet.jpg
 python examples/lines.py tests/images/score_croped.jpg
+python examples/lines.py tests/images/score.jpg
 ```
