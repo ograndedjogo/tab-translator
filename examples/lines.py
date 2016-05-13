@@ -20,7 +20,7 @@ def main():
     cv2.imshow('source', src)
     cv2.imshow('%d hlines' % len(hlines), print_lines(greyed, hlines))
     cv2.imshow('%d hlinesp' % len(hlinesp), print_lines(greyed, hlinesp))
-    cv2.imshow('skeleton', print_lines(skeletonize(src), 50, 200))
+    cv2.imshow('skeleton', skeletonize(src))
     cv2.waitKey(0)
 
 def print_lines(image, lines):
