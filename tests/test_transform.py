@@ -56,7 +56,6 @@ def test_ordered_bubling_exception():
     assert expected_exception.args == catched_exception.args
 
 
-
 def __assert_points_order(points, order, actual):
     expected = [el[1] for el in sorted(list(zip(order, points)), key=lambda x: x[0])]
     assert expected == actual, "Wrong points order"
@@ -66,12 +65,12 @@ def test_distance():
     assert 1 == distance((0, 0), (0, 1))
     assert 5 == distance((0, 3), (4, 0))
 
+
 def test_get_target_rectangle_size():
     test_case = ((0, 0), (1, 0), (0.5, 0.5), (0, 1))
     assert (1, 1) == get_target_rectangle_size(test_case)
     nparray = np.array(test_case, dtype='float')
     assert (1, 1) == get_target_rectangle_size(nparray)
-
 
 
 def test_resize():
@@ -87,6 +86,7 @@ def test_resize():
     assert (200, 300) == resize(array, width=300).shape[:2]
     assert (220, 330) == resize(array, height=220, width=330).shape[:2]
 
+
 def test_detect_englobing_polygon_simple():
     array = np.ones(shape=(5000, 5000, 3), dtype='uint8') * 250
     array[200:1800, 200:2800, :] = 0
@@ -97,6 +97,7 @@ def test_detect_englobing_polygon_simple():
     assert (200, 1790) in points
     assert (2790, 200) in points
     assert (2790, 1790) in points
+
 
 def test_detect_englobing_polygon_nested():
     array = np.ones(shape=(5000, 5000, 3), dtype='uint8') * 250
@@ -109,6 +110,7 @@ def test_detect_englobing_polygon_nested():
     assert (200, 1790) in points
     assert (2790, 200) in points
     assert (2790, 1790) in points
+
 
 def test_detect_englobing_polygon_error():
     array = np.ones(shape=(200, 200, 3), dtype='uint8') * 250
