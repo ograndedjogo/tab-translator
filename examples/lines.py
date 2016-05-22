@@ -9,21 +9,23 @@ import math
 from tabtranslator.transform import reduce_lines
 
 def main():
+    ALGORITHMS= {'hough': HoughLines,
+                 'houghp': HoughLinesP}
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument('image', help='path to the image file')
+    ap.add_argument('--algo', '-a', help='line feature detection algorithm switch',
+                     default='hough', choices=ALGORITHMS.keys())
     args = ap.parse_args()
 
     src = cv2.imread(args.image)
     edged = cv2.Canny(src, 50, 200)
     greyed = cv2.cvtColor(edged, cv2.COLOR_GRAY2BGR)
-    hlines = HoughLines(edged)
-    hlines = list(reduce_lines(hlines))
-    hlinesp = HoughLinesP(edged)
-    hlinesp = list(reduce_lines(hlinesp, angle_threshold=0.1))
+
+    algo = ALGORITHMS[args.algo]
+    lines = algo(edged)
+    lines = list(reduce_lines(lines))
     cv2.imshow('source', src)
-    cv2.imshow('%d hlines' % len(hlines), print_lines(greyed, hlines))
-    cv2.imshow('%d hlinesp' % len(hlinesp), print_lines(greyed, hlinesp))
-    cv2.imshow('skeleton', skeletonize(src))
+    cv2.imshow('%d lines, algo: %s' % (len(lines), algo.__name__), print_lines(greyed, lines))
     cv2.waitKey(0)
 
 def print_lines(image, lines):
