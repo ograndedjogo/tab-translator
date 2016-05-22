@@ -3,7 +3,7 @@ import cv2
 from tabtranslator.transform import ordered, order_points, distance, \
                                     get_target_rectangle_size, resize, \
                                     detect_englobing_polygon, POINTS_ORDER, \
-                                    reduce_lines, interpolate
+                                    reduce_lines, interpolate, group_lines
 import pkg_resources as pkg
 import sys
 
@@ -146,7 +146,7 @@ def test_reduce_lines():
                  ((0, 16), (84, 16)),
                  ((8, 6),  (134, 8)),
                  ((51, 8), (137, 7))]
-    assert len(reduce_lines(test_case, angle_threshold=0.1)) == 5
+    assert len(list(reduce_lines(test_case, angle_threshold=0.1))) == 5
 
     test_case = [((-1000, 24), (999, 25)),
                  ((-1000, 26), (999, 27)),
@@ -168,7 +168,7 @@ def test_reduce_lines():
                  ((-1000, 24), (999, 59)),
                  ((-998, 54), (1000, -14)),
                  ((-993, 123), (999, -51))]
-    assert len(reduce_lines(test_case)) == 5
+    assert len(list(reduce_lines(test_case))) == 5
 
 
 def test_interpolate():
@@ -177,6 +177,17 @@ def test_interpolate():
     assert interpolate((0, 0), (1, 1)) == (1, 0)
     assert interpolate((0, 1), (1, 1)) == (0, 1)
     assert interpolate((0, 0), (0, 1)) == (sys.float_info.max, 0)
+
+def test_group_lines():
+    test_case = [((8, 6), (134, 8)), ((0, 16), (84, 16)), ((0, 25), (137, 25)), ((0, 34), (137, 34)), ((0, 43), (137, 43))]
+    result = group_lines(test_case)
+    assert len(result) == 1
+
+
+    test_case =  [((-1000, 6), (999, 7)), ((-1000, 15), (999, 16)), ((-1000, 24), (999, 25)), ((-1000, 33), (999, 34)), ((-1000, 42), (999, 43))]
+    result = group_lines(test_case)
+    assert len(result) == 1
+
 
 def _image(name):
     image = pkg.resource_stream('tests.images', name)

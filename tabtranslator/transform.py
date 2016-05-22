@@ -3,6 +3,7 @@ import numpy as np
 import cv2
 import inspect
 import sys
+import collections
 
 # top left, top right, bottom right, bottom left
 POINTS_ORDER = ((0, 0), (1, 0), (1, 1), (0, 1))
@@ -85,15 +86,38 @@ def get_target_rectangle_size(points):
 
 def reduce_lines(lines, angle_threshold=0.01, distance_threshold=5):
     """Reduce a set of lines to horizontal and distinct ones"""
-    horizontal_lines = [line for line in lines if abs(interpolate(*line)[0]) < angle_threshold]
-    horizontal_lines = sorted(horizontal_lines, key=lambda x: interpolate(*x)[1])
+    Axb = collections.namedtuple('Axb', ['a', 'b', 'points'])
+    lines = [Axb(*interpolate(*line), points=line) for line in lines]
 
-    reduced_lines = [horizontal_lines[0]]
-    for line in horizontal_lines:
-        if abs(interpolate(*line)[1] - interpolate(*reduced_lines[-1])[1] > distance_threshold):
+    lines = [line for line in lines if abs(line.a) < angle_threshold]
+
+    lines = sorted(lines, key=lambda line: line.b)
+    reduced_lines = [lines[0]]
+
+    for line in lines:
+        if  abs(line.b - reduced_lines[-1].b) > distance_threshold:
             reduced_lines.append(line)
 
-    return reduced_lines
+    return map(lambda line: line.points, reduced_lines)
+
+
+def group_lines(lines, group_by=5, distance_threshold=5):
+    Axb = collections.namedtuple('Axb', ['a', 'b', 'points'])
+    lines = [Axb(*interpolate(*line), points=line) for line in lines]
+    groups = []
+    current_run = [lines[0], lines[1]]
+    current_height = abs(current_run[0].b - current_run[1].b)
+    for line in lines[2:]:
+        if  abs(abs(current_run[-1].b - line.b) - current_height) < distance_threshold:
+            current_run.append(line)
+        else:
+            if len(current_run) == group_by - 1:
+                groups.append(current_run)
+            current_run = [current_run[-1], line]
+            current_height = abs(current_run[0].b - current_run[1].b)
+    if len(current_run) == group_by:
+        groups.append(current_run)
+    return groups
 
 def interpolate(point_a, point_b):
     x_diff = point_a[0] - point_b[0]
